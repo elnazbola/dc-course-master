@@ -14,48 +14,6 @@ public class Processor {
         this.request = request;
     }
 
-    static void prime_number(int number) throws IOException
-    {
-        
-        int a; 
-        int b; 
-        int flag;
-
-        System.out.println(
-                "Prime numbers from 1 and " + number
-                        + " : ");
-
-        for (a = 1; a <= number; a++) {
-            if (a == 1 || a == 0)
-                continue;
-
-            flag = 1;
-
-            for (b = 2; b <= a / 2; ++b) {
-                if (a % b == 0) {
-                    flag = 0;
-                    break;
-                }
-            }
-
- 
-            if (flag == 1)
-                System.out.print(a + " ");
-        }
-    }
-
-    public static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            int z = Integer.parseInt(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-
     public void process() throws IOException {
         System.out.println("Got request:");
         System.out.println(request.toString());
@@ -96,7 +54,7 @@ public class Processor {
             output.println("</html>");
             output.flush();
             socket.close();
-        } else if(isNumeric(requestSplit[1].substring(1))){
+        } else if(isNum(requestSplit[1].substring(1))){
             output.println("HTTP/1.1 200 OK");
             output.println("Content-Type: text/html; charset=utf-8");
             output.println();
@@ -149,4 +107,17 @@ public class Processor {
             socket.close();
         }
     }
+
+    public static boolean isNum(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int z = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+    
 }
